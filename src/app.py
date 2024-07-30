@@ -85,14 +85,14 @@ def create_char():
 
     return "The force is with you", 200
 
-@app.route('/characters/<int:character_id>', methods=['GET'])
+@app.route('/characters/<int:char_id>', methods=['GET'])
 def get_char(char_id):
     char = Characters.query.get(char_id)
     unique_char = char.serialize()
 
     return jsonify(unique_char), 200
 
-@app.route('/characters/<int:character_id>', methods=['DELETE'])
+@app.route('/characters/<int:char_id>', methods=['DELETE'])
 def del_char(char_id):
     char = Characters.query.get(char_id)
 
