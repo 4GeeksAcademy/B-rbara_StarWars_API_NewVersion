@@ -126,14 +126,14 @@ def create_planet():
 
     return "The force is with you", 200
 
-@app.route('/planets/<int:character_id>', methods=['GET'])
+@app.route('/planets/<int:planet_id>', methods=['GET'])
 def get_planet(planet_id):
     planet = Planets.query.get(planet_id)
     unique_planet = planet.serialize()
 
     return jsonify(unique_planet), 200
 
-@app.route('/planets/<int:character_id>', methods=['DELETE'])
+@app.route('/planets/<int:planet_id>', methods=['DELETE'])
 def del_planet(planet_id):
     planet = Planets.query.get(planet_id)
 
