@@ -143,13 +143,13 @@ def del_planet(planet_id):
     return "The force is with you", 200
 
 # Faves
-@app.route('/faves/user/<int:user_id>', methods=['GET'])
+@app.route('/favorites/user/<int:user_id>', methods=['GET'])
 def get_faves(user_id):
     user = User.query.get(user_id)
 
     fave_chars = (
        db.session.query(Faves, Characters)
-       .join(Characters, Faves.favorite_planet == Characters.id)
+       .join(Characters, Faves.fave_planet == Characters.id)
        .filter(Faves.user_id == user_id)
        .all() 
     )
@@ -170,7 +170,7 @@ def get_faves(user_id):
 
     fave_planets = (
        db.session.query(Faves, Planets)
-       .join(Planets, Faves.favorite_planet == Planets.id)
+       .join(Planets, Faves.fave_planet == Planets.id)
        .filter(Faves.user_id == user_id)
        .all() 
     )
@@ -193,19 +193,19 @@ def get_faves(user_id):
     return jsonify(list_fave_chars + list_fave_planets), 200
 
 # Fave Characters
-@app.route('/favorites/user/<int:user_id>/characters/<int:character_id>', methods=['POST'])
+@app.route('/favorites/user/<int:user_id>/characters/<int:char_id>', methods=['POST'])
 def create_fave_char(user_id, char_id):
     new_fave_char = Faves(
         user_id = user_id,
         fave_char = char_id
-        )
+    )
 
     db.session.add(new_fave_char)
     db.session.commit()
 
     return "The force is with you", 200
 
-@app.route('/favorites/user/<int:user_id>/characters/<int:character_id>', methods=['DELETE'])
+@app.route('/favorites/user/<int:user_id>/characters/<int:char_id>', methods=['DELETE'])
 def del_fave_char(user_id, char_id):
     char_to_del = (
         db.session.query(Faves)
@@ -223,7 +223,7 @@ def del_fave_char(user_id, char_id):
 def create_fave_planet(user_id, planet_id):
     new_fave_planet = Faves(
         user_id = user_id,
-        fave_char = planet_id
+        fave_planet = planet_id
         )
 
     db.session.add(new_fave_planet)
